@@ -39,8 +39,23 @@ describe "User pages" do
         it "should create a user" do
             expect {click_button submit}.to change(User, :count).by(1)
         end
-     end
-   end
+
+        describe "after saving the user" do
+           before {click_button submit}
+           let(:user) {User.find_by_email('user@example.com')}
+
+           it {should have_selector('title', text:user.name)}
+           it {should have_link('Sign out')}
+        end
+ 
+    #  describe "followed by signout" do
+     #     before {click_link 'Sign out'}
+     #     it {should have_link('Sign in')}
+     # end
+          
+    end
+
+  end
  
    describe "sign up error message" do
       before {visit signup_path}
@@ -65,19 +80,7 @@ describe "User pages" do
       
    end
   
-
-
-
-
-
-
-
-
-
-
-
 end
-
 
 
 
